@@ -1,0 +1,285 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY untitled-ontology-10 "http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#"
+     xml:base="http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10"
+     xmlns:untitled-ontology-10="http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10">
+        <owl:imports rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/knows -->
+
+    <owl:ObjectProperty rdf:about="&foaf;knows">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Id -->
+
+    <owl:DatatypeProperty rdf:about="&untitled-ontology-10;Id"/>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#afinidade -->
+
+    <owl:DatatypeProperty rdf:about="&untitled-ontology-10;afinidade"/>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#disease -->
+
+    <owl:DatatypeProperty rdf:about="&untitled-ontology-10;disease">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://purl.org/dc/terms/Agent"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#tempodoenca -->
+
+    <owl:DatatypeProperty rdf:about="&untitled-ontology-10;tempodoenca"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Admin_Fulano -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Admin_Fulano">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <foaf:familyName>Fulano</foaf:familyName>
+        <foaf:firstName>Admin</foaf:firstName>
+        <disease>diabetes</disease>
+        <Id>2</Id>
+        <tempodoenca>1</tempodoenca>
+        <foaf:gender>1</foaf:gender>
+        <afinidade>2</afinidade>
+        <foaf:age>16</foaf:age>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Pinho"/>
+        <foaf:knows rdf:resource="&untitled-ontology-10;enio_sombra"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Araújo_Marcelo -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Araújo_Marcelo">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <disease>diabetes</disease>
+        <foaf:firstName>Araújo</foaf:firstName>
+        <afinidade>2</afinidade>
+        <foaf:age>42</foaf:age>
+        <tempodoenca>5</tempodoenca>
+        <foaf:gender>1</foaf:gender>
+        <Id>4</Id>
+        <foaf:familyName>Marcelo</foaf:familyName>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Maria_Oliveira"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Bruno_Elvis_Costa_Rodrigues -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Bruno_Elvis_Costa_Rodrigues">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <foaf:familyName>Costa Rodrigues</foaf:familyName>
+        <foaf:gender>1</foaf:gender>
+        <foaf:age>22</foaf:age>
+        <foaf:firstName>Bruno Elvis</foaf:firstName>
+        <tempodoenca>1</tempodoenca>
+        <disease>diabetes</disease>
+        <Id>22</Id>
+        <afinidade>3</afinidade>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Jerffeson_Gomes"/>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Pinho"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Dantas_Salatiel -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Dantas_Salatiel">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <afinidade>1</afinidade>
+        <tempodoenca>2</tempodoenca>
+        <foaf:familyName>Salatiel</foaf:familyName>
+        <foaf:firstName>Dantas</foaf:firstName>
+        <foaf:gender>1</foaf:gender>
+        <disease>diabetes</disease>
+        <foaf:age>24</foaf:age>
+        <Id>21</Id>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Jerffeson_Gomes"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Fabio_Braga -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Fabio_Braga">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <Id>18</Id>
+        <disease>ELA</disease>
+        <foaf:firstName>Fabio</foaf:firstName>
+        <afinidade>2</afinidade>
+        <foaf:age>1</foaf:age>
+        <tempodoenca>5</tempodoenca>
+        <foaf:familyName>Braga</foaf:familyName>
+        <foaf:gender>1</foaf:gender>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Francisco_Milton_Mendes_Neto -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Francisco_Milton_Mendes_Neto">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <afinidade>3</afinidade>
+        <foaf:age>43</foaf:age>
+        <foaf:firstName>Francisco Milton</foaf:firstName>
+        <tempodoenca>2</tempodoenca>
+        <Id>6</Id>
+        <disease>diabetes</disease>
+        <foaf:gender>1</foaf:gender>
+        <foaf:familyName>Mendes Neto</foaf:familyName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Janathan_Darlan -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Janathan_Darlan">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <foaf:gender>1</foaf:gender>
+        <foaf:familyName>Darlan</foaf:familyName>
+        <tempodoenca>4</tempodoenca>
+        <afinidade>1</afinidade>
+        <disease>diabetes</disease>
+        <Id>5</Id>
+        <foaf:age>6</foaf:age>
+        <foaf:firstName>Jonathan</foaf:firstName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Jerffeson_Gomes -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Jerffeson_Gomes">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <foaf:age>21</foaf:age>
+        <disease>ELA</disease>
+        <foaf:familyName>Gomes</foaf:familyName>
+        <tempodoenca>1</tempodoenca>
+        <Id>8</Id>
+        <foaf:firstName>Jerffeson</foaf:firstName>
+        <foaf:gender>1</foaf:gender>
+        <afinidade>1</afinidade>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Bruno_Elvis_Costa_Rodrigues"/>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Pinho"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Maria_Oliveira -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Maria_Oliveira">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <afinidade>3</afinidade>
+        <Id>17</Id>
+        <foaf:familyName>Oliveira</foaf:familyName>
+        <disease>diabetes</disease>
+        <foaf:gender>2</foaf:gender>
+        <tempodoenca>2</tempodoenca>
+        <foaf:age>16</foaf:age>
+        <foaf:firstName>Maria</foaf:firstName>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Araújo_Marcelo"/>
+        <foaf:knows rdf:resource="&untitled-ontology-10;enio_sombra"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Pinho -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;Pinho">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <Id>27</Id>
+        <foaf:gender>1</foaf:gender>
+        <foaf:familyName>Alvares</foaf:familyName>
+        <foaf:age>0</foaf:age>
+        <disease>diabetes</disease>
+        <afinidade>1</afinidade>
+        <foaf:firstName>Pinho</foaf:firstName>
+        <tempodoenca>4</tempodoenca>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Admin_Fulano"/>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Bruno_Elvis_Costa_Rodrigues"/>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Jerffeson_Gomes"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#enio_sombra -->
+
+    <owl:NamedIndividual rdf:about="&untitled-ontology-10;enio_sombra">
+        <rdf:type rdf:resource="http://schema.org/Person"/>
+        <afinidade>3</afinidade>
+        <foaf:firstName>enio</foaf:firstName>
+        <foaf:gender>1</foaf:gender>
+        <foaf:familyName>sombra</foaf:familyName>
+        <foaf:age>2</foaf:age>
+        <disease>diabetes</disease>
+        <tempodoenca>3</tempodoenca>
+        <Id>3</Id>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Admin_Fulano"/>
+        <foaf:knows rdf:resource="&untitled-ontology-10;Maria_Oliveira"/>
+    </owl:NamedIndividual>
+</rdf:RDF>

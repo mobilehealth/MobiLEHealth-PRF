@@ -262,7 +262,7 @@ public class AlgoritmoGenetico {
     	
     	// Porcentagem de individuos que devem sofre mutação
     	int taxa = 10;
-
+    	ArrayList<Integer> IdPossibleFriends = ontologia.possibleriendsOf(person);
     	
     	for(int a = 0; a < (populacao.size()*(taxa/100.0)); a++){
 	    	
@@ -303,14 +303,10 @@ public class AlgoritmoGenetico {
 	    		// Escolhe qual membro da população vai ser usado na mutação
 	        	int p2;
 	        	Person cromoTemp;
-	        	
-	        	do{
-	        		
-	        		p2 = random.nextInt(this.persons.size());
-	        		cromoTemp = this.persons.get(p2);
-			
-	        	} while (this.persons.get(p2).getId() == person.getId());
-	        	
+
+	        	p2 = random.nextInt(IdPossibleFriends.size());
+	        	cromoTemp = find(IdPossibleFriends.get(p2));
+
 	        	populacao.get(p1).remove(c1);
 	        	populacao.get(p1).add(cromoTemp);
 	    		

@@ -1,12 +1,14 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Person {
 	
 	
 	private int id;
-	private int age;
+	private int idade = 0;
+	private Calendar age;
 	private String name_first;
 	private String name_last;
 	private String gender;
@@ -23,11 +25,26 @@ public class Person {
 		this.id = id;
 	}
 	public int getAge() {
-		return age;
+		return this.idade;
 	}
-	public void setAge(int age) {
-		this.age = age;
+	
+	public void setAge(Calendar age) {
+		
+		
+		Calendar calendar = Calendar.getInstance();
+		this.idade = calendar.get(Calendar.YEAR) - age.get(Calendar.YEAR);
+
+		if (calendar.get(Calendar.MONTH) < age.get(Calendar.MONTH)) {
+			this.idade--;
+		} else {
+			if (calendar.get(Calendar.MONTH) == age.get(Calendar.MONTH)) {
+				if (calendar.get(Calendar.DAY_OF_MONTH) < age.get(Calendar.DAY_OF_MONTH)) {
+					this.idade--;
+				}
+			}
+		}
 	}
+	
 	public String getName_first() {
 		return name_first;
 	}
@@ -77,6 +94,19 @@ public class Person {
 	}
 	public void setSameFriends(Integer sameFriends) {
 		this.sameFriends = sameFriends;
+	}
+	
+	public int getIdade() {
+		
+		return this.idade;
+		
+	}
+	
+	
+	public void setIdade(int idade) {
+		
+		this.idade = idade;
+		
 	}
 
 	

@@ -1,6 +1,12 @@
 package ontology;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -15,6 +21,7 @@ import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.util.FileManager;
 
+import DAO.PersonDAO;
 import domain.Person;
 
 public class Ontology {
@@ -22,6 +29,10 @@ public class Ontology {
 	public static ArrayList<Person> getAllPersons(){
 		
 		try {
+			
+			
+			gerarArquivoOWL();
+			
 			
 			FileManager.get().addLocatorClassLoader(Ontology.class.getClassLoader());
 			Model model = FileManager.get().loadModel("RelateUsers.owl");
@@ -42,10 +53,12 @@ public class Ontology {
 					+ " ?person prop:Id ?id"
 					+ "}";
 			
+			
 			Query query = QueryFactory.create(q);
 			QueryExecution qexec = QueryExecutionFactory.create(query, model);
 			ResultSet r = qexec.execSelect();
 			QuerySolution s;
+			
 			
 			Query query2 ;
 			QueryExecution qexec2;
@@ -60,10 +73,16 @@ public class Ontology {
 
 				s = r.nextSolution();
 				
+				
+				
 				person.setId(Integer.parseInt(s.getLiteral("id").toString()));
 				person.setName_first(s.getLiteral("firstName").toString());
 				person.setName_last(s.getLiteral("familyName").toString());
-				person.setAge(Integer.parseInt(s.getLiteral("age").toString()));
+				
+				
+				person.setIdade(Integer.parseInt(s.getLiteral("age").toString()));
+				
+				
 				person.setDisease(s.getLiteral("disease").toString());
 				person.setAfinidade(s.getLiteral("afinidade").toString());
 				person.setTempodoenca(s.getLiteral("tempodoenca").toString());
@@ -80,6 +99,10 @@ public class Ontology {
 				query2 = QueryFactory.create(q2);
 				qexec2 = QueryExecutionFactory.create(query2, model);
 				r2 = qexec2.execSelect();
+			
+				
+				
+				
 				
 				while (r2.hasNext()){
 					s2 = r2.nextSolution();
@@ -94,8 +117,6 @@ public class Ontology {
 			}
 			
 			qexec.close();
-			
-			
 			return persons;
 			
 		} catch (Exception e){
@@ -193,6 +214,179 @@ public class Ontology {
 		}
 		qexec.close();
 		return count;
+		
+	}
+
+
+
+	public static void gerarArquivoOWL() {
+		
+		// Armazena as informações basícas dos individuos
+		String individuos = " ";
+		ArrayList<Person> persons = new ArrayList<Person>();
+		ArrayList<Person> personsFrindns;
+
+		
+		PersonDAO dao;
+		
+		try {
+			
+			dao = new PersonDAO();
+			persons = dao.getPreencharOntologia();
+		
+		
+			for (int i =0; i < persons.size(); i++) {
+				
+
+				personsFrindns = new ArrayList<Person>();
+				personsFrindns = dao.getPreencharOntologiaAmigos(persons.get(i).getId());
+				individuos += 
+						"\n\n\n<!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#"+persons.get(i).getName_first()+"_"+persons.get(i).getName_last()+"-->\n\n\n"+
+	
+							"<owl:NamedIndividual rdf:about=\"&untitled-ontology-10;"+persons.get(i).getName_first()+"_"+persons.get(i).getName_last()+"\">\n"+
+										
+								        "<rdf:type rdf:resource=\"http://schema.org/Person\"/>\n"+
+								        "<Id>"+persons.get(i).getId()+"</Id>\n"+
+								        "<foaf:firstName>"+persons.get(i).getName_first()+"</foaf:firstName>\n"+
+								        "<foaf:familyName>"+persons.get(i).getName_last()+"</foaf:familyName>\n"+
+								       
+								        "<disease>"+persons.get(i).getDisease()+"</disease>\n"+
+								        
+								        "<tempodoenca>"+persons.get(i).getTempodoenca()+"</tempodoenca>\n"+
+								        "<foaf:gender>"+persons.get(i).getGender()+"</foaf:gender>\n"+
+								        "<afinidade>"+persons.get(i).getAfinidade()+"</afinidade>\n"+
+								        "<foaf:age>"+persons.get(i).getIdade()+"</foaf:age>\n";
+				
+										for(int j = 0; j < personsFrindns.size(); j++){
+											
+											individuos += "<foaf:knows rdf:resource=\"&untitled-ontology-10;"+personsFrindns.get(j).getName_first()+"_"+personsFrindns.get(j).getName_last()+"\"/>\n";
+											
+										}
+										
+										individuos += "</owl:NamedIndividual>";
+				
+			}
+		
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+						        		
+						      
+		
+		// String que contém as informações basícas do arquivo da ontologia
+		// basta concatenar e escrever no arquivo
+		String arquivoOWLbase = 
+				"<?xml version=\"1.0\"?>\n"+
+					"<!DOCTYPE rdf:RDF [\n"+
+				    "<!ENTITY foaf \"http://xmlns.com/foaf/0.1/\">\n"+
+				    "<!ENTITY owl \"http://www.w3.org/2002/07/owl#\" >\n"+
+				    "<!ENTITY xsd \"http://www.w3.org/2001/XMLSchema#\" >\n"+
+				    "<!ENTITY rdfs \"http://www.w3.org/2000/01/rdf-schema#\" >\n"+
+				    "<!ENTITY rdf \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >\n"+
+				    "<!ENTITY untitled-ontology-10 \"http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#\" >\n"+
+				    "]>\n\n\n"+
+				    
+				    "<rdf:RDF xmlns=\"http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#\"\n"+
+						"xml:base=\"http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10\"\n"+
+						"xmlns:untitled-ontology-10=\"http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#\"\n"+
+					    "xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n"+
+					    "xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n"+
+					    "xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n"+
+					    "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n"+
+					    "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n"+
+					    "<owl:Ontology rdf:about=\"http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10\">\n"+
+					    "    <owl:imports rdf:resource=\"http://xmlns.com/foaf/0.1/\"/>\n"+
+					    "</owl:Ontology>\n\n\n\n"+
+    
+
+
+					    "<!-- \n"+
+					    "///////////////////////////////////////////////////////////////////////////////////////\n"+
+					    "//\n"+
+					    "// Object Properties\n"+
+					    "//\n"+
+					    "///////////////////////////////////////////////////////////////////////////////////////\n"+
+					     "-->\n\n\n\n"+
+					
+					    "<!-- http://xmlns.com/foaf/0.1/knows -->\n\n"+
+					
+					    "<owl:ObjectProperty rdf:about=\"&foaf;knows\">\n"+
+					        "<rdf:type rdf:resource=\"&owl;SymmetricProperty\"/>\n"+
+					    "</owl:ObjectProperty>\n\n\n"+
+					    
+					
+					
+					    "<!-- \n"+
+					    "///////////////////////////////////////////////////////////////////////////////////////\n"+
+					    "//\n"+
+					    "// Data properties\n"+
+					    "//\n"+
+					    "///////////////////////////////////////////////////////////////////////////////////////\n"+
+					    "-->\n\n\n"+
+					
+					    
+					
+					
+					    "<!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#Id -->\n\n"+
+					
+					    "<owl:DatatypeProperty rdf:about=\"&untitled-ontology-10;Id\"/>\n\n\n"+
+					    
+					
+					
+					    "<!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#afinidade -->\n\n"+
+					
+					    "<owl:DatatypeProperty rdf:about=\"&untitled-ontology-10;afinidade\"/>\n\n\n"+
+					    
+					
+					
+					    "<!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#disease -->\n\n"+
+					
+					    "<owl:DatatypeProperty rdf:about=\"&untitled-ontology-10;disease\">\n"+
+					        "<rdf:type rdf:resource=\"&owl;FunctionalProperty\"/>\n"+
+					        "<rdfs:domain rdf:resource=\"http://purl.org/dc/terms/Agent\"/>\n"+
+					        "<rdfs:range rdf:resource=\"&rdfs;Literal\"/>\n"+
+					    "</owl:DatatypeProperty>\n\n\n\n"+
+					    
+					
+					
+					    "<!-- http://www.semanticweb.org/jerffeson/ontologies/2016/5/untitled-ontology-10#tempodoenca -->\n\n"+
+					
+					    "<owl:DatatypeProperty rdf:about=\"&untitled-ontology-10;tempodoenca\"/>\n\n\n\n"+
+					    
+					
+					
+					    "<!-- \n"+
+					    "///////////////////////////////////////////////////////////////////////////////////////\n"+
+					    "//\n"+
+					    "// Individuals\n"+
+					    "//\n"+
+					    "///////////////////////////////////////////////////////////////////////////////////////\n"+
+					    "-->" + 
+					    
+					    individuos 
+					    
+					    + "</rdf:RDF>";
+		
+		
+		
+		
+		FileWriter arquivo;
+		try {
+			arquivo = new FileWriter(new File("RelateUsers.owl"));
+			arquivo.write(arquivoOWLbase);
+			arquivo.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
 		
 	}
 	

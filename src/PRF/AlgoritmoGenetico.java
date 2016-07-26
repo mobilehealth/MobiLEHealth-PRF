@@ -115,14 +115,14 @@ public class AlgoritmoGenetico {
 			
 			for(int j = 0; j < tamCromossomo; j++){
 				
-				if(person.getAge() > populacao.get(i).get(j).getAge()){
-					auxIdade += (person.getAge() - populacao.get(i).get(j).getAge());
+				if(person.getAge() > populacao.get(i).get(j).getIdade()){
+					auxIdade += (person.getIdade() - populacao.get(i).get(j).getIdade());
 				} else {
-					auxIdade += (populacao.get(i).get(j).getAge() - person.getAge());
+					auxIdade += (populacao.get(i).get(j).getIdade() - person.getIdade());
 				}
 			}
 			
-			fatorIdade = person.getAge()/auxIdade;
+			fatorIdade = person.getIdade()/auxIdade;
 			
 			for(int j = 0; j < tamCromossomo; j++){
 				int count = 0;
@@ -169,7 +169,7 @@ public class AlgoritmoGenetico {
 
 			//System.out.println("\t\tfator Idade: " + fatorIdade);
 			// Função Fitness
-			avaliacao[i] = 0.2*(fatorDoenca) + 0.1*(fatorAfinidade) + 0.3*(fatorTempo) + 0.2*(fatorAmigos) + 0.1*(person.getAge()/ auxIdade) + 0.1*fatorGenero;
+			avaliacao[i] = 0.2*(fatorDoenca) + 0.1*(fatorAfinidade) + 0.2*(fatorTempo) + 0.3*(fatorAmigos) + 0.1*(person.getIdade()/ auxIdade) + 0.1*fatorGenero;
 			
 			//System.out.println("\t0.2*" + fatorDoenca + " + 0.1*" + fatorAfinidade + " + 0.3*"+ fatorTempo + " + 0.2*" +fatorAmigos + " + 0.1*"+ "(" + person.getAge()+ "/" +auxIdade + ")" + " + 0.1*" + fatorGenero + " = " + avaliacao[i]);
 			//System.out.println("\tAvaliação: " + avaliacao[i]);
